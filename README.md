@@ -1,0 +1,2 @@
+# ispyscreenshots
+Screenshot detection model
