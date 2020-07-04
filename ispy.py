@@ -14,8 +14,8 @@ import tensorflow as tf
 
 
 db = plyvel.DB('/tmp/ispydb/', create_if_missing=True)
-model = tf.keras.models.load_model('model.h5')
-model2 = tf.keras.models.load_model('modeltwo.h5')
+model = tf.keras.models.load_model('model.h5') #Load the v2 model
+model2 = tf.keras.models.load_model('modeltwo.h5') #Load the v3 model
 # you need to have config.yaml
 with open('config.yaml', 'r') as f:
   config = yaml.load(f, Loader=yaml.FullLoader)['reddit']
@@ -47,7 +47,7 @@ def predict(path):
 
   # [0][0] selects the first (only) node from the first (only) item in this batch.
   score = model.predict(img)[0][0]
-  score2 = model.predict(img)[0][0]
+  score2 = model2.predict(img)[0][0]
 
   # post should be removed if we have 65%+ confidence and text
   return int(score*50 + score2*50), bool(score > 0.65) and bool(score2 > 0.65) and contains_text
